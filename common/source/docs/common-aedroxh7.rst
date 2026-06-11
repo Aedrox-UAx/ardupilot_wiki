@@ -4,6 +4,12 @@
 =========
 AEDROX H7
 =========
+The AEDROXH7 is an STM32H743-based FPV flight controller from AEDROX.
+
+Purchase from [aedrox.com.](https://www.aedrox.com)
+
+For full hardware documentation and pinouts, see the [manufacturer documentation](https://aedrox.gitbook.io/docs)
+
 
 Features
 ========
@@ -50,15 +56,23 @@ The default RC input is configured on the UART3 (RX3/SBUS). Non SBUS,  single wi
 
 OSD Support
 ===========
-DisplayPort OSD is available by default on the HD VTX connector.
+Onboard OSD using OSD_TYPE 1 (MAX7456 driver) is supported by default. Simultaneously, DisplayPort OSD is available on the HD VTX connector (SERIAL8).
 
 VTX Support
 ===========
-The SH1.0-6P connector supports a DJI Air Unit / HD VTX connection. Protocol defaults to DisplayPort. Pin 1 of the connector is 10v so be careful not to connect this to a peripheral requiring 5v. DisplayPort OSD is enabled by default on SERIAL8.
+The SH1.0-6P connector supports a DJI Air Unit / HD VTX connection. Protocol defaults to DisplayPort. 
+A second VTX port is available for analog VTX.
+Digital and analog OSD are sharing the SERIAL8, so this port should be set to the approriate function.
+Be carefull with these connectors power pins (10v/VBATT), do not connect this to a peripheral requiring 5v. 
 
 VTX power control
 =================
-GPIO 83 controls the VTX BEC output to pins marked "12V" and is included on the HD VTX connector. Setting this GPIO low removes voltage supply to this pin/pad. By default RELAY3 is configured to control this pin and sets the GPIO high at boot.
+GPIO 83 controls the VTX BEC output to pins marked "10V" and is included on the HD VTX connector and Analogic VTX connector. Setting this GPIO low removes voltage supply to this pin/pad. By default RELAY2 is configured to control this pin and sets the GPIO low at boot.
+
+Camera Switch
+=================
+GPIO 84 controls the camera switch (RELAY3). Setting this GPIO low will output the CAM1 stream, setting this high will output the CAM2 stream. By default RELAY3 is configured to control this pin and sets the GPIO low at boot.
+
 
 PWM Output
 ==========
@@ -78,7 +92,7 @@ to use DShot. Channels 1-8 support bi-directional dshot.
 
 Battery Monitoring
 ==================
-The board has a internal voltage sensor and connections on the ESC connector for an external current sensor input. The voltage sensor can handle up to 6S LiPo batteries.
+The board has a internal voltage sensor and connections on the ESC connector for an external current sensor input. The voltage sensor can handle up to 8S LiPo batteries.
 
 The default battery parameters are:
 
@@ -96,8 +110,8 @@ Additional GPIOs
 ================
 The numbering of the two additional user GPIOs for PIN variables in ArduPilot parameters is:
 
-* GPIO1 pin is ArduPilot GPIO 81
-* GPIO2 pin is ArduPilot GPIO 82
+* GPIO1 pin is ArduPilot GPIO 81  (RELAY1)
+* GPIO2 pin is ArduPilot GPIO 82  (RELAY2)
 
 Firmware
 ========
